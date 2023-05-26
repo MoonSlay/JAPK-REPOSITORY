@@ -1,0 +1,73 @@
+﻿@model WebApplication1.Models.RegistrationModel
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Registration</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/modernizr")
+</head>
+<body>
+
+    @if (ViewBag.ErrorMessage != null)
+    {
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <strong>Error!</strong> @ViewBag.ErrorMessage
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
+
+    @if (ViewBag.SuccessMessage != null)
+    {
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <strong>Success!</strong> @ViewBag.SuccessMessage
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
+
+    <div class=" d-flex align-items-center justify-content-center vh-100" style="flex-direction:column">
+        @using (@Html.BeginForm())
+        {
+            <div style="text-align:center">
+                <h3>Registration</h3>
+                <h6>We do not sell/share your information to any third party companies</h6>
+                <div style="text-align:center">
+                    @Html.Label("Username", new { @class = "label-username" })
+                    @Html.TextBoxFor(Model => Model.USERNAME, new { @maxlength = "12", @class = "form-control", style = "margin:auto;", required = "required" })
+                </div>
+                <div style="text-align:center">
+                    @Html.Label("Password", new { @class = "label-password" })
+                    @Html.PasswordFor(Model => Model.PASSWORD, new { @class = "form-control", style = "margin:auto;", required = "required" })
+                    @Html.ValidationMessageFor(m => m.PASSWORD, null, new { @class = "text-danger" })
+
+                </div>
+                <div style="text-align:center">
+                    @Html.Label("Repeat Password", new { @class = "label-repeat-password" })
+                    @Html.PasswordFor(Model => Model.REPEAT_PASSWORD, new { @class = "form-control", style = "margin:auto;", required = "required" })
+                    @Html.ValidationMessageFor(m => m.REPEAT_PASSWORD, null, new { @class = "text-danger" })
+
+                </div>
+                <div style="text-align:center">
+                    @Html.Label("Name", new { @class = "label-name" })
+                    @Html.TextBoxFor(Model => Model.USERNAME, new { @maxlength = "50", @class = "form-control", style = "margin:auto;", required = "required" })
+                </div>
+                <div style="text-align:center">
+                    @Html.Label("Email", new { @class = "label-email" })
+                    @Html.TextBoxFor(Model => Model.USERNAME, new { @maxlength = "100", @class = "form-control", style = "margin:auto;", required = "required" })
+                </div>
+                <div style="text-align:center">
+                    <button class="btn btn-dark btn-block" style="margin-top:10px">Register</button>
+                </div>
+            </div>
+
+        }
+    </div>
+</body>
+</html>

@@ -1,0 +1,48 @@
+﻿@model TBL_LOGIN
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Password Repository System</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/modernizr")
+
+</head>
+<body>
+    @if (ViewBag.ErrorMessage != null)
+    {
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <strong>Error!</strong> @ViewBag.ErrorMessage
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
+    <div class=" d-flex align-items-center justify-content-center vh-100" style="flex-direction:column">
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+            <div>
+                <h3>Password Repository System</h3>
+                <div style="text-align:center">
+                    @Html.Label("Username", new { @class = "label-username" })
+                    @Html.TextBoxFor(Model => Model.USERNAME, new { @class = "form-control", style = "margin:auto;", required = "required" })
+                </div>
+                <div style="text-align:center">
+                    @Html.Label("Password", new { @class = "label-password" })
+                    @Html.PasswordFor(Model => Model.PASSWORD, new { @class = "form-control", style = "margin:auto;", required = "required" })
+                </div>
+                <div style="text-align:center">
+                    <button class="btn btn-warning btn-block" style="margin-top:10px; width:50%">Login</button>
+                </div>
+            </div>
+        }
+        <button class="btn btn-primary btn-block" style="margin-top:10px; width:15%" onclick="@("window.location.href='" + @Url.Action("index", "Register") + "'");">Register Now</button>
+    </div>
+</body>
+</html>

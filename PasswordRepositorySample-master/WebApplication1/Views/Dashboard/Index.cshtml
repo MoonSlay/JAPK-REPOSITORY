@@ -1,0 +1,194 @@
+﻿@model WebApplication1.Models.DashboardModel
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Dashboard</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/modernizr")
+
+</head>
+<body>
+    <div>
+        <h4 style="text-align:center">My Password List</h4>
+        <button class="btn btn-info btn-sm" type="button" data-bs-toggle="modal" data-bs-target="#add-password-modal">Add new password</button>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Site name</th>
+                    <th scope="col">Password</th>
+                    <th scope="col">Options</th>
+                </tr>
+            </thead>
+            <tbody>
+                @{
+                    foreach (var data in Model.PasswordList)
+                    {
+                        <tr>
+                            <th scope="row">@data.ID</th>
+                            <td>@data.SITE_NAME</td>
+                            <td>@data.SITE_PASSWORD</td>
+                            <td>
+                                <div>
+                                    <button class="btn btn-danger btn-sm">Delete</button>
+                                    <button class="btn btn-info btn-sm">Modify</button>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+
+    <div id="add-password-modal" class="modal fade" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Add new student</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    @Html.Partial("_AddPassword", Model.PasswordModel)
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="modify-student-modal" class="modal fade" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Modify student details</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <label id="lbl-student-id-number">Student Id number</label>
+                    <input type="text" class="form-control" id="txb-student-id-number" />
+
+                    <label id="lbl-student-name">Student Name</label>
+                    <input type="text" class="form-control" id="txb-student-name" />
+
+                    <label id="lbl-student-address">Student Address</label>
+                    <input type="text" class="form-control" id="txb-student-address" />
+
+                    <label id="lbl-student-year">Student Year</label>
+                    <input type="text" class="form-control" id="txb-student-year" />
+
+                    <label id="lbl-student-contact-number">Student contact number</label>
+                    <input type="text" class="form-control" id="txb-student-contact-number" />
+
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="cb-active">
+                        <label class="form-check-label" for="cb-active">
+                            Is active
+                        </label>
+                    </div>
+
+                    <input type="hidden" id="student-id" />
+
+                    <div style="text-align:right">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <input type="button" value="Modify student" class="btn btn-info" onclick="modifyStudentDetails()" />
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
+
+<script type="text/javascript">function deleteStudent(studentId, studentName, studentIdNumber) {
+
+        if (confirm("Do you want to delete: " + studentName + " with id number: " + studentIdNumber + "?")) {
+
+            var data = {
+                studentId : studentId
+            }
+
+            $.ajax({
+                type: "POST",
+                url: "/Students/DeleteStudent",
+                dataType: "JSON",
+                data: JSON.stringify(data),
+                contentType: 'application/json; charset=utf8',
+                success: function (res) {
+                    alert(res.msg)
+                    location.reload(true);
+                },
+                error: function () {
+                    alert("An error occurred")
+                }
+            })
+
+        }
+
+    }
+
+    function showStudentDetails(studentId, studentNumber, studentName, studentContactNumber, studentYearLevel, status, studentAddress) {
+
+        $('#modify-student-modal').modal('show');
+
+        $('#txb-student-name').val(studentName);
+        $('#txb-student-address').val(studentAddress);
+        $('#txb-student-id-number').val(studentNumber);
+        $('#txb-student-year').val(studentYearLevel);
+        $('#txb-student-contact-number').val(studentContactNumber);
+        $('#student-id').val(studentId)
+
+        $('#cb-active').prop('checked', status)
+
+
+    }
+
+    function modifyStudentDetails() {
+
+        var studentName = $('#txb-student-name').val();
+        var studentAddress = $('#txb-student-address').val();
+        var studentIdNumber = $('#txb-student-id-number').val();
+        var studentYear = $('#txb-student-year').val();
+        var studentContactNumber = $('#txb-student-contact-number').val();
+        var studentId = $('#student-id').val()
+        var isActive = $('#cb-active').prop('checked');
+
+
+        if (confirm('Are you sure you want to modify the student details?')) {
+
+            var data = {
+                studentId: studentId,
+                studentName: studentName,
+                studentAddress: studentAddress,
+                studentIdNumber: studentIdNumber,
+                studentYearLevel: studentYear,
+                studentContactNumber: studentContactNumber,
+                isActive: isActive
+            }
+
+            $.ajax({
+                type: "POST",
+                url: "/Students/UpdateStudent",
+                dataType: "JSON",
+                data: JSON.stringify(data),
+                contentType: 'application/json; charset=utf8',
+                success: function (res) {
+                    alert(res.msg)
+                    location.reload(true);
+                },
+                error: function () {
+                    alert("An error occurred")
+                }
+            })
+
+        }
+
+    }
