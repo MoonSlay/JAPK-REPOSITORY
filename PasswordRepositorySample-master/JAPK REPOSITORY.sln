@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.4.33213.308
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LoginSystemMaster", "WebApplication1\LoginSystemMaster.csproj", "{6D44AF36-A416-4951-86FE-DF8496867D5C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JAPK REPOSITORY", "WebApplication1\JAPK REPOSITORY.csproj", "{6D44AF36-A416-4951-86FE-DF8496867D5C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

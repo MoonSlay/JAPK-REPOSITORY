@@ -27,7 +27,7 @@ namespace WebApplication1.Controllers
             if (ModelState.IsValid)
             {
                 var ePassword = Helpers.Encryption.Encrypt(login.PASSWORD);
-                using (PassRepoDbEntities entities = new PassRepoDbEntities())
+                using (JAPKDBEntities entities = new JAPKDBEntities())
                 {
                     var data = entities.TBL_LOGIN.Where(x => x.USERNAME == login.USERNAME && x.PASSWORD == ePassword).FirstOrDefault();
                     if (data == null)

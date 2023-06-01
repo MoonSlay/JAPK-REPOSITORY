@@ -19,6 +19,8 @@ namespace WebApplication1
         public string USER_EMAIL { get; set; }
         public Nullable<int> UID { get; set; }
         public System.DateTime DATE_CREATED { get; set; }
+        public string CONTACT { get; set; }
+        public string BIRTHDAY { get; set; }
     
         public virtual TBL_LOGIN TBL_LOGIN { get; set; }
     }

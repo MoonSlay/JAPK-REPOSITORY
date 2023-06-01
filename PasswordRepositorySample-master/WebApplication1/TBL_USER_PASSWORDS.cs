@@ -21,6 +21,10 @@ namespace WebApplication1
         public System.DateTime DATE_CREATED { get; set; }
         public System.DateTime DATE_MODIFIED { get; set; }
         public bool IS_DELETED { get; set; }
+        public string USER_NAME { get; set; }
+        public string EMAIL { get; set; }
+        public Nullable<int> CONTACT_NUMBER { get; set; }
+        public string DEC_PASSWORD { get; set; }
     
         public virtual TBL_LOGIN TBL_LOGIN { get; set; }
     }
