@@ -49,35 +49,35 @@
                 <h6>We do not sell/share your information to any third party companies</h6>
                 <div style="text-align:center">
                     @Html.Label("Username", new { @class = "label-username" })
-                    @Html.TextBoxFor(Model => Model.USERNAME, new { @maxlength = "12", @class = "form-control", style = "margin:auto;", required = "required" })
+                    @Html.TextBoxFor(Model => Model.USERNAME, new { @maxlength = "12", @class = "form-control", style = "margin:auto;", required = "required", placeholder = "Username" })
                 </div>
                 <div style="text-align:center">
                     @Html.Label("Password", new { @class = "label-password" })
-                    @Html.PasswordFor(Model => Model.PASSWORD, new { @class = "form-control", style = "margin:auto;", required = "required" })
+                    @Html.PasswordFor(Model => Model.PASSWORD, new { @class = "form-control", style = "margin:auto;", required = "required", placeholder = "Password" })
                     @Html.ValidationMessageFor(m => m.PASSWORD, null, new { @class = "text-danger" })
 
                 </div>
                 <div style="text-align:center">
                     @Html.Label("Repeat Password", new { @class = "label-repeat-password" })
-                    @Html.PasswordFor(Model => Model.REPEAT_PASSWORD, new { @class = "form-control", style = "margin:auto;", required = "required" })
+                    @Html.PasswordFor(Model => Model.REPEAT_PASSWORD, new { @class = "form-control", style = "margin:auto;", required = "required", placeholder = "Reapeat-Password" })
                     @Html.ValidationMessageFor(m => m.REPEAT_PASSWORD, null, new { @class = "text-danger" })
 
                 </div>
                 <div style="text-align:center">
                     @Html.Label("Name", new { @class = "label-name" })
-                    @Html.TextBoxFor(Model => Model.NAME, new { @maxlength = "50", @class = "form-control", style = "margin:auto;", required = "required" })
+                    @Html.TextBoxFor(Model => Model.NAME, new { @maxlength = "50", @class = "form-control", style = "margin:auto;", required = "required", placeholder = "Name" })
                 </div>
                 <div style="text-align:center">
                     @Html.Label("Email", new { @class = "label-email" })
-                    @Html.TextBoxFor(Model => Model.EMAIL, new { @maxlength = "100", @class = "form-control", style = "margin:auto;", required = "required" })
+                    @Html.TextBoxFor(Model => Model.EMAIL, new { @maxlength = "100", @class = "form-control", style = "margin:auto;", required = "required", placeholder = "Email" })
                 </div>
                 <div style="text-align:center">
                     @Html.Label("Contact", new { @class = "label-contact" })
-                    @Html.TextBoxFor(Model => Model.CONTACT, new { @maxlength = "100", @class = "form-control", style = "margin:auto;", required = "required" })
+                    @Html.TextBoxFor(Model => Model.CONTACT, new { @maxlength = "100", @class = "form-control", style = "margin:auto;", required = "required", placeholder = "Contact Number" })
                 </div>
                 <div style="text-align:center">
                     @Html.Label("Birthday", new { @class = "label-birthday" })
-                    @Html.TextBoxFor(Model => Model.BIRTHDAY, new { @maxlength = "100", @class = "form-control", style = "margin:auto;", required = "required" })
+                    @Html.TextBoxFor(Model => Model.BIRTHDAY, new { @maxlength = "100", @class = "form-control", style = "margin:auto;", required = "required", placeholder = "Birthday" })
                 </div>
                 <div style="text-align:center">
                     <button class="btn btn-dark btn-block" style="margin-top:10px">Register</button>

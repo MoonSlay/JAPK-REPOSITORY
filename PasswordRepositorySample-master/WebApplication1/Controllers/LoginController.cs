@@ -56,5 +56,25 @@ namespace WebApplication1.Controllers
             ViewBag.ErrorMesage = "Invalid Email/Password";
             return View();
         }
+
+        //LogOut Code
+        public ActionResult LogOut()
+        {
+            //clears all Session variables
+            Session["ID"] = null;
+            Session["UserName"] = null;
+            Session["PIN"] = null;
+            Session["TO"] = null;
+            Session["timedout"] = null;
+
+            //Clears whole session altogether
+            Session.Abandon();
+
+            //Clears cookie session
+            FormsAuthentication.SignOut();
+
+            //Brings back to home
+            return RedirectToAction("Index", "Login");
+        }
     }
 }

@@ -25,7 +25,7 @@ namespace WebApplication1.Controllers
 
                 }
                 var userId = (Int32)Session["user_id"];
-                var passwordData = entities.TBL_USER_PASSWORDS.Where(x => x.USER_ID == userId).ToList();
+                var passwordData = entities.TBL_USER_PASSWORDS.Where(x => x.USER_ID == userId && x.IS_DELETED == false).ToList();
 
                 var passwordList = new List<PasswordModel>();
 
@@ -112,8 +112,7 @@ namespace WebApplication1.Controllers
                 {
                     return Json(new { msg = "Account not found." });
                 }
-
-                entities.TBL_USER_PASSWORDS.Remove(data);
+                data.IS_DELETED = true;
 
                 if (entities.SaveChanges() >= 1)
                 {
@@ -164,6 +163,7 @@ namespace WebApplication1.Controllers
             }
         }
 
+
         [HttpPost]
         public ActionResult EditProfile(int userId, string name, string birthday, string contact, string email)
         {
@@ -192,10 +192,71 @@ namespace WebApplication1.Controllers
 
             }
         }
-        public ActionResult LogOut()
+
+        public ActionResult Restore()
         {
-            FormsAuthentication.SignOut();
-            return RedirectToAction("Index", "Login");
+            return View();  
         }
-    }
+
+
+        [HttpPost]
+        public ActionResult RestoreEntry(int userId)
+        {
+
+            using (JAPKDBEntities entities = new JAPKDBEntities())
+            {
+
+                var data = entities.TBL_USER_PASSWORDS.Where(x => x.ID == userId).FirstOrDefault();
+
+                if (data == null)
+                {
+                    return Json(new { msg = "Entry not found (how???)" });
+                }
+
+
+                data.IS_DELETED = false;
+
+
+                if (entities.SaveChanges() >= 1)
+                {
+                    //Success Message
+                    return Json(new { msg = "Entry deleted" });
+                }
+                else
+                {
+                    //Error Message
+                    return Json(new { msg = "An error occurred(Controller)" });
+                }
+
+            }
+        }
+
+        [HttpPost]
+        public ActionResult PermDeleteEntry(int userId)
+        {
+
+            using (JAPKDBEntities entities = new JAPKDBEntities())
+            {
+
+                var data = entities.TBL_USER_PASSWORDS.Where(x => x.ID == userId).FirstOrDefault();
+
+                if (data == null)
+                {
+                    return Json(new { msg = "Entry not found (how???)" });
+                }
+
+                data.IS_DELETED = true;
+                if (entities.SaveChanges() >= 1)
+                {
+                    //Success Message
+                    return Json(new { msg = "Entry deleted" });
+                }
+                else
+                {
+                    //Error Message
+                    return Json(new { msg = "An error occurred(Controller)" });
+                }
+
+            }
+        }
 }

@@ -42,9 +42,12 @@
             }
         </div>*@
 
+    <li><a class="dropdown-item" href="@Url.Action("LogOut", "Login")">Logout</a></li>
+
     @*general repository layout*@
     <div>
         <h4 style="text-align:center">Welcome back</h4>
+        <button class="btn btn-primary btn-block" style="margin-top:50px; width:25%" onclick="@("window.location.href='" + @Url.Action("Restore", "Dashboard") + "'");">Restore Password</button>
         <button class="btn btn-info btn-sm" type="button" data-bs-toggle="modal" data-bs-target="#add-password-modal">Add new password</button>
         <table class="table">
             <thead>
@@ -59,11 +62,11 @@
                 </tr>
             </thead>
             <tbody>
-                @{
+                @{var ID = 0;
                     foreach (var data in Model.PasswordList)
                     {
                         <tr>
-                            <th scope="row">@data.ID</th>
+                            <th scope="row">@ID</th>
                             <td>@data.SITE_NAME</td>
                             <td>@data.SITE_PASSWORD</td>
                             <td>@data.DEC_PASSWORD</td>
@@ -78,14 +81,14 @@
                                 </div>
                             </td>
                         </tr>
-
+                        ID++;
                     }
                 }
             </tbody>
         </table>
     </div>
 
-    @*add new student modal*@
+    @*add password modal*@
     <div id="add-password-modal" class="modal fade" tabindex="-1">
         <div class="modal-dialog">
             <div class="modal-content">

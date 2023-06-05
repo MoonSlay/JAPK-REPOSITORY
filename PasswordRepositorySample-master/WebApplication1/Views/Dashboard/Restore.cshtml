@@ -1,0 +1,113 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>This is restore</title>
+</head>
+<body>
+    @if (Request.UrlReferrer != null)
+    {
+        <a class="btn btn-primary btn-block bottomNav" style="margin-top:10px; width:15%" onclick="history.go(-1); return false;" href="#">Return</a><br />
+    }
+<div class="col-8" id="table-rightcolumn">
+    @*<table class="table">
+        <thead>
+            <tr>ttttttttttttt
+                <th scope="col">#</th>
+                <th scope="col">Site name</th>
+                <th scope="col">Password</th>
+                <th scope="col">Username</th>
+                <th scope="col">Email</th>
+                <th scope="col">Contact Number</th>
+                <th scope="col">Options</th>
+            </tr>
+        </thead>
+        <tbody>
+                foreach (var data in Model.PasswordList.Where(x => x.IS_DEt.Equals(true) && x.isActive.Equals(true)))
+                {
+                    <tr>
+                        <th scope="row">@ID</th>
+                        <td>@data.SITE_NAME</td>
+                        <td>@data.SITE_PASSWORD</td>
+                        <td>@data.DEC_PASSWORD</td>
+                        <td>@data.USER_NAME</td>
+                        <td>@data.EMAIL</td>
+                        <td>@data.CONTACT_NUMBER</td>
+                        <td>
+                            <div>
+                                <button class="btn btn-danger btn-sm" onclick="deleteAccount('@data.ID', '@data.SITE_NAME', '@data.USER_NAME')">Delete</button>
+                                <button class="btn btn-info btn-sm" onclick="showAccountDetails('@data.ID', '@data.SITE_NAME','@data.SITE_PASSWORD', '@data.USER_NAME', '@data.EMAIL', '@data.CONTACT_NUMBER')">Modify</button>
+                                <button class="btn btn-info btn-sm" onclick="showPassword('@data.ID', '@data.DEC_PASSWORD')">Show Password</button>
+                            </div>
+                        </td>
+                    </tr>
+                    ID++;
+                }
+            }
+        </tbody>
+    </table>
+</div>
+</body>
+</html>
+
+<script type="text/javascript">
+
+    function restoreEntry(passwordID) {
+
+        if (confirm("Are you sure you want to restore this entry?")) {
+
+            var data = {
+                passwordID: passwordID
+            }
+
+            $.ajax({
+                type: "POST",
+                url: "/Dashboard/RestoreEntry",
+                dataType: "JSON",
+                data: JSON.stringify(data),
+                contentType: 'application/json; charset=utf8',
+                success: function (res) {
+                    alert(res.msg)
+                    location.reload(true);
+                },
+                error: function () {
+                    alert("An error occurred (Javascript)")
+                }
+            })
+
+        }
+
+    }
+
+    function permDeleteEntry(passwordID) {
+
+        if (confirm("Are you sure you want to permanently delete this entry?")) {
+
+            var data = {
+                passwordID: passwordID
+            }
+
+            $.ajax({
+                type: "POST",
+                url: "/Dashboard/PermDeleteEntry",
+                dataType: "JSON",
+                data: JSON.stringify(data),
+                contentType: 'application/json; charset=utf8',
+                success: function (res) {
+                    alert(res.msg)
+                    location.reload(true);
+                },
+                error: function () {
+                    alert("An error occurred (Javascript)")
+                }
+            })
+
+        }
+
+    }*@
+</script>
