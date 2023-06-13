@@ -24,33 +24,53 @@
         </div>
     }
 
-    @*set background*@
+    @*Set CSS*@
     <style>
-
         body {
-            background-image: url('../../images/try.gif');
+            background-image: url('../../images/login.png');
+            overflow-y: hidden
+        }
+
+        #roundedcorner {
+            border-radius: 20px;
+            background: #73AD21;
+            padding: 25px;
+        }
+
+        h1 {
+            color: white;
+            font-family: 'Agency FB';
+            font-size: 500%;
         }
     </style>
+
+    <h1>JAPK Repository System</h1>
+
     <div class=" d-flex align-items-center justify-content-center vh-100" style="flex-direction:column">
         @using (Html.BeginForm())
         {
             @Html.AntiForgeryToken()
-            <div>
-                <h3>JAPK Repository System</h3>
-                <div style="text-align:center">
-                    @Html.Label("Username", new { @class = "label-username" })
-                    @Html.TextBoxFor(Model => Model.USERNAME, new { @class = "form-control", style = "margin:auto;", required = "required" })
-                </div>
-                <div style="text-align:center">
-                    @Html.Label("Password", new { @class = "label-password" })
-                    @Html.PasswordFor(Model => Model.PASSWORD, new { @class = "form-control", style = "margin:auto;", required = "required" })
-                </div>
-                <div style="text-align:center">
-                    <button class="btn btn-warning btn-block" style="margin-top:10px; width:50%">Login</button>
-                </div>
+        <div class="bg-light border border-dark" style="margin-bottom:50px" id="roundedcorner">
+            <div style="text-align:center; margin-bottom:25px">
+                <h3>Login Page</h3>
             </div>
+
+            <div style="text-align:center; margin-bottom:10px">
+                @Html.TextBoxFor(Model => Model.USERNAME, new { @class = "form-control", style = "margin:auto;", required = "required", placeholder = "Username" })
+            </div>
+            <div style="text-align:center; margin-bottom:10px">
+                @Html.PasswordFor(Model => Model.PASSWORD, new { @class = "form-control", style = "margin:auto;", required = "required", placeholder = "Password" })
+            </div>
+            <div style="text-align:center">
+                <button class="btn btn-warning btn-block" style="margin-top:10px; width:50%">Login</button>
+            </div>
+            <div class="d-flex justify-content-center" style="margin-top:50px">
+                <p style="text-align:center">
+                    Don't have an account yet? <a href="/Register/Index" id="signinprompt">Register Here.</a>
+                </p>
+            </div>
+        </div>
         }
-        <button class="btn btn-primary btn-block" style="margin-top:50px; width:25%" onclick="@("window.location.href='" + @Url.Action("index", "Register") + "'");">Register Now</button>
     </div>
 </body>
 </html>

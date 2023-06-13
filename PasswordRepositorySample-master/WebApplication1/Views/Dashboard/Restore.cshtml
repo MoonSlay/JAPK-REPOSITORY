@@ -1,4 +1,5 @@
-﻿@{
+﻿@model WebApplication1.Models.DashboardModel
+@{
     Layout = null;
 }
 
@@ -7,67 +8,155 @@
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
-    <title>This is restore</title>
+    <title>Dashboard</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/modernizr")
 </head>
 <body>
-    @if (Request.UrlReferrer != null)
-    {
-        <a class="btn btn-primary btn-block bottomNav" style="margin-top:10px; width:15%" onclick="history.go(-1); return false;" href="#">Return</a><br />
-    }
-<div class="col-8" id="table-rightcolumn">
-    @*<table class="table">
-        <thead>
-            <tr>ttttttttttttt
-                <th scope="col">#</th>
-                <th scope="col">Site name</th>
-                <th scope="col">Password</th>
-                <th scope="col">Username</th>
-                <th scope="col">Email</th>
-                <th scope="col">Contact Number</th>
-                <th scope="col">Options</th>
-            </tr>
-        </thead>
-        <tbody>
-                foreach (var data in Model.PasswordList.Where(x => x.IS_DEt.Equals(true) && x.isActive.Equals(true)))
-                {
-                    <tr>
-                        <th scope="row">@ID</th>
-                        <td>@data.SITE_NAME</td>
-                        <td>@data.SITE_PASSWORD</td>
-                        <td>@data.DEC_PASSWORD</td>
-                        <td>@data.USER_NAME</td>
-                        <td>@data.EMAIL</td>
-                        <td>@data.CONTACT_NUMBER</td>
-                        <td>
-                            <div>
-                                <button class="btn btn-danger btn-sm" onclick="deleteAccount('@data.ID', '@data.SITE_NAME', '@data.USER_NAME')">Delete</button>
-                                <button class="btn btn-info btn-sm" onclick="showAccountDetails('@data.ID', '@data.SITE_NAME','@data.SITE_PASSWORD', '@data.USER_NAME', '@data.EMAIL', '@data.CONTACT_NUMBER')">Modify</button>
-                                <button class="btn btn-info btn-sm" onclick="showPassword('@data.ID', '@data.DEC_PASSWORD')">Show Password</button>
-                            </div>
-                        </td>
-                    </tr>
-                    ID++;
+    <style>
+        body {
+            background-image: url('../../images/password.jpg');
+            overflow-y: hidden;
+            overflow-x: hidden
+        }
+
+        #roundedcorner {
+            border-radius: 20px;
+            background: #73AD21;
+            padding: 50px;
+        }
+    </style>
+    <nav class="navbar bg-body-tertiary fixed-top">
+        <div class="container-fluid">
+            <ul class="nav nav-tabs">
+                <li class="nav-item">
+                    <a class="navbar-brand fs-1">PASSWORD</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link fs-2" aria-current="page" href="/Dashboard/Manage">Manage</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active fs-2" aria-current="page" href="/Dashboard/Restore">Recover</a>
+                </li>
+            </ul>
+            <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
+                <div class="offcanvas-header">
+                    <h5 class="offcanvas-title" id="offcanvasNavbarLabel">Welcome</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                </div>
+                <div class="offcanvas-body">
+                    <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                JAPK Repository
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li class="nav-item">
+                                    <a class="nav-link active" aria-current="page" href="/Dashboard/Homepage">Home</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link active" aria-current="page" href="/Dashboard/LearnMore">About Us</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Password
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li class="nav-item">
+                                    <a class="nav-link active" aria-current="page" href="/Dashboard/Manage">Manage</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link active" aria-current="page" href="/Dashboard/Restore">Recover</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Settings
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li class="nav-item">
+                                    <a class="nav-link active" aria-current="page" href="/Dashboard/Profile">Profile</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link active" aria-current="page" href="/Dashboard/LoginDetails">Login Details</a>
+                                </li>
+                                <li>
+                                    <hr class="dropdown-divider">
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link bg-danger" aria-current="page" href="@Url.Action("LogOut", "Login")">Logout</a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    @*general repository layout*@
+    <div>
+
+        <table class="table table-bordered table-sm table-striped border-black border border-5 bg-light border border-dark" style= "margin-top:50px" id="roundedcorner">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Site name</th>
+                    <th scope="col">Password</th>
+                    <th scope="col">Username</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Contact Number</th>
+                    <th scope="col">Options</th>
+                </tr>
+            </thead>
+            <tbody class="table-group-divider">
+                @{var ID = 0;
+                    foreach (var data in Model.PasswordList)
+                    {
+                        <tr>
+                            <th scope="row">@ID</th>
+                            <td>@data.SITE_NAME</td>
+                            <td>@data.SITE_PASSWORD</td>
+                            <td>@data.USER_NAME</td>
+                            <td>@data.EMAIL</td>
+                            <td>@data.CONTACT_NUMBER</td>
+                            <td>
+                                <div>
+                                    <button class="btn btn-danger btn-sm" onclick="recoverAccount('@data.ID', '@data.SITE_NAME', '@data.USER_NAME')">Recover</button>
+                                </div>
+                            </td>
+                        </tr>
+                        ID++;
+                    }
                 }
-            }
-        </tbody>
-    </table>
-</div>
+            </tbody>
+        </table>
+    </div>
+
 </body>
 </html>
 
 <script type="text/javascript">
 
-    function restoreEntry(passwordID) {
+    function recoverAccount(userId, siteName, userName) {
 
-        if (confirm("Are you sure you want to restore this entry?")) {
+        if (confirm("Are you sure you want to recover your account in " + siteName + " with the username " + userName + "?")) {
 
             var data = {
-                passwordID: passwordID
+                userId: userId
             }
 
             $.ajax({
                 type: "POST",
-                url: "/Dashboard/RestoreEntry",
+                url: "/Dashboard/RestoreAccount",
                 dataType: "JSON",
                 data: JSON.stringify(data),
                 contentType: 'application/json; charset=utf8',
@@ -76,7 +165,7 @@
                     location.reload(true);
                 },
                 error: function () {
-                    alert("An error occurred (Javascript)")
+                    alert("An error occurred")
                 }
             })
 
@@ -84,30 +173,4 @@
 
     }
 
-    function permDeleteEntry(passwordID) {
-
-        if (confirm("Are you sure you want to permanently delete this entry?")) {
-
-            var data = {
-                passwordID: passwordID
-            }
-
-            $.ajax({
-                type: "POST",
-                url: "/Dashboard/PermDeleteEntry",
-                dataType: "JSON",
-                data: JSON.stringify(data),
-                contentType: 'application/json; charset=utf8',
-                success: function (res) {
-                    alert(res.msg)
-                    location.reload(true);
-                },
-                error: function () {
-                    alert("An error occurred (Javascript)")
-                }
-            })
-
-        }
-
-    }*@
 </script>
