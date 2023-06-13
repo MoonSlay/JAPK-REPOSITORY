@@ -54,7 +54,7 @@ namespace WebApplication1.Helpers
                 cryptoStream.Close();
                 return Encoding.UTF8.GetString(plainTextBytes, 0, decryptedByteCount);
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 return cipherText;
             }

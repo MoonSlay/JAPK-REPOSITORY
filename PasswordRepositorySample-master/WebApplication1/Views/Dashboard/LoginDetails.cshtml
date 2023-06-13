@@ -1,0 +1,278 @@
+﻿@model WebApplication1.Models.DashboardModel
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Dashboard</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/modernizr")
+</head>
+<body>
+    <style>
+        body {
+            background-image: url('../../images/profile.jpg');
+            overflow-y: hidden;
+            overflow-x: hidden
+        }
+
+        #roundedcorner {
+            border-radius: 25px;
+            background: #fff;
+            padding: 50px;
+        }
+
+        #incorner {
+            border-radius: 5px;
+            background: #fff;
+            padding: 5px;
+        }
+    </style>
+
+    <nav class="navbar bg-body-tertiary fixed-top">
+        <div class="container-fluid">
+            <ul class="nav nav-tabs">
+                <li class="nav-item">
+                    <a class="navbar-brand fs-1">SETTINGS</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link fs-2" aria-current="page" href="/Dashboard/Profile">Profile</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active fs-2" aria-current="page" href="/Dashboard/LoginDetails">Login Details</a>
+                </li>
+            </ul>
+            <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
+                <div class="offcanvas-header">
+                    <h5 class="offcanvas-title" id="offcanvasNavbarLabel">Welcome</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                </div>
+                <div class="offcanvas-body">
+                    <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                JAPK Repository
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li class="nav-item">
+                                    <a class="nav-link active" aria-current="page" href="/Dashboard/Homepage">Home</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link active" aria-current="page" href="/Dashboard/LearnMore">About Us</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Password
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li class="nav-item">
+                                    <a class="nav-link active" aria-current="page" href="/Dashboard/Manage">Manage</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link active" aria-current="page" href="/Dashboard/Restore">Recover</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Settings
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li class="nav-item">
+                                    <a class="nav-link active" aria-current="page" href="/Dashboard/Profile">Profile</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link active" aria-current="page" href="/Dashboard/LoginDetails">Login Details</a>
+                                </li>
+                                <li>
+                                    <hr class="dropdown-divider">
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link active" aria-current="page" href="@Url.Action("LogOut", "Login")">Logout</a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    @*general repository layout*@
+    <div class=" d-flex align-items-center justify-content-center vh-100" style="flex-direction:column">
+        <div class="bg-light border border-dark" id="roundedcorner">
+            <div style="text-align:center">
+                <h3>Account Details</h3>
+            </div>
+            <div>
+                @foreach (var log in Model.RegistrationList)
+                {
+                    <div style="text-align:center; margin-bottom:5px">
+                        <h6>Username</h6>
+                    </div>
+                    <div class="border border-dark" style="margin-bottom:10px" id="incorner">
+                        @log.USERNAME
+                    </div>
+                    <div>
+                        <button class="btn btn-warning btn-sm" onclick="changePass('@log.ID', '@log.PASSWORD')">Change Password</button>
+                        <button class="btn btn-warning btn-sm" onclick="modifyProfileDetails('@log.ID', '@log.USERNAME')">Edit Username</button>
+                    </div>
+
+                }
+
+            </div>
+        </div>
+
+
+    </div>
+
+    @*Edit account Modal*@
+    <div id="edit-profile-modal" class="modal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Edit Username</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+
+                    <label id="label-username">Username</label>
+                    <input type="text" class="form-control" id="txb-username" />
+
+                    <input type="hidden" id="pass-id" />
+
+                    <div style="text-align:center; margin-top:10px">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <input type="button" value="Edit account" class="btn btn-warning" onclick="editUser()" />
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="change-pass-modal" class="modal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Change Password</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <input type="text" class="form-control" id="txb-oldpass" placeholder="Confirm Password" />
+
+                    <input type="text" class="form-control" id="txb-newpass" placeholder="New Password" />
+
+                    <input type="hidden" id="pass-id" />
+
+                    <div style="text-align:center">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <input type="button" value="Change Password" class="btn btn-warning" onclick="changePassw()" />
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
+
+<script type="text/javascript">
+
+    function modifyProfileDetails(uId, uSername) {
+
+        $('#edit-profile-modal').modal('show');
+
+        $('#txb-username').val(uSername);
+        $('#pass-id').val(uId)
+
+    }
+
+
+    function editUser() {
+
+        var uSername = $('#txb-username').val();
+        var uId = $('#pass-id').val()
+
+
+        if (confirm('Are you sure you want to modify the account details?')) {
+
+            var log = {
+                uSername: uSername,
+                uId: uId,
+            }
+
+            $.ajax({
+                type: "POST",
+                url: "/Dashboard/EditUsername",
+                dataType: "JSON",
+                data: JSON.stringify(log),
+                contentType: 'application/json; charset=utf8',
+                success: function (res) {
+                    alert(res.msg)
+                    location.reload(true);
+                },
+                error: function () {
+                    alert("An error occurred")
+                }
+            })
+
+        }
+
+    }
+
+    function changePass(uId) {
+
+        $('#change-pass-modal').modal('show');
+
+        $('#pass-id').val(uId)
+
+    }
+
+
+    function changePassw() {
+
+        var oldpass = $('#txb-oldpass').val();
+        var newpass = $('#txb-newpass').val();
+        var uId = $('#pass-id').val()
+
+
+        if (confirm('Are you sure you want to modify the account details?')) {
+
+            var log = {
+                oldpass: oldpass,
+                newpass: newpass,
+                uId: uId,
+            }
+
+            $.ajax({
+                type: "POST",
+                url: "/Dashboard/ChangePassword",
+                dataType: "JSON",
+                data: JSON.stringify(log),
+                contentType: 'application/json; charset=utf8',
+                success: function (res) {
+                    alert(res.msg)
+                    location.reload(true);
+                },
+                error: function () {
+                    alert("An error occurred")
+                }
+            })
+
+        }
+
+    }
+</script>

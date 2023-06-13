@@ -8,12 +8,19 @@ namespace WebApplication1.Models
 {
     public class RegistrationModel
     {
-        public string USERNAME { get;set; }
-        public string PASSWORD { get;set; }
-        public string NAME { get;set; }
-        public string EMAIL { get;set; }
+        public int ID { get; set; } 
+        public string USERNAME { get; set; }
+        //[Required(ErrorMessage = "This field is required")]
+        public string PASSWORD { get; set; }
+        //[Required(ErrorMessage = "This field is required")]
+        public string dec_Pass { get; set; }
+        public string NAME { get; set; }
+        //[Required(ErrorMessage = "This field is required")]
+        public string EMAIL { get; set; }
+        public int CONTACT { get; set; }
+        public string BIRTHDAY { get; set; }
 
-        [Compare("PASSWORD",ErrorMessage = "Password does not match")]
-        public string REPEAT_PASSWORD { get;set; }
+        [Compare("PASSWORD", ErrorMessage = "Password does not match")]
+        public string REPEAT_PASSWORD { get; set; }
     }
 }

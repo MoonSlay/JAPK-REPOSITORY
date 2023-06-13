@@ -14,7 +14,7 @@ namespace WebApplication1.Controllers
         {
             if (Session["user_id"] != null)
             {
-                return RedirectToAction("Index", "Dashboard");
+                return RedirectToAction("Homepage", "Dashboard");
             }
 
             return View();
@@ -27,7 +27,7 @@ namespace WebApplication1.Controllers
             if (ModelState.IsValid)
             {
                 var ePassword = Helpers.Encryption.Encrypt(login.PASSWORD);
-                using (PassRepoDbEntities entities = new PassRepoDbEntities())
+                using (JAPKDBEntities entities = new JAPKDBEntities())
                 {
                     var data = entities.TBL_LOGIN.Where(x => x.USERNAME == login.USERNAME && x.PASSWORD == ePassword).FirstOrDefault();
                     if (data == null)
@@ -46,15 +46,31 @@ namespace WebApplication1.Controllers
                     };
 
                     Session["user_id"] = data.ID;
-                    Session.Timeout = 1440;
 
                     Response.Cookies.Add(httpCookie);
-                    return RedirectToAction("Index","Dashboard");
+                    return RedirectToAction("Homepage","Dashboard");
 
                 }
             }
             ViewBag.ErrorMesage = "Invalid Email/Password";
             return View();
+        }
+
+        //LogOut Code
+        public ActionResult LogOut()
+        {
+            //clears all Session variables
+            Session["ID"] = null;
+
+
+            //Clears whole session altogether
+            Session.Abandon();
+
+            //Clears cookie session
+            FormsAuthentication.SignOut();
+
+            //Brings back to home
+            return RedirectToAction("Index", "Login");
         }
     }
 }

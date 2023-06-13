@@ -1,0 +1,126 @@
+﻿@model WebApplication1.Models.DashboardModel
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Dashboard</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/modernizr")
+
+</head>
+<body>
+    <style>
+        body {
+            background-image: url('../../images/more.jpg');
+            overflow-y: hidden
+        }
+
+        p {
+            color: black;
+            font-family: 'Ink Free';
+            font-size: 100%;
+        }
+
+        h3 {
+            color: black;
+            font-family: Cooper Black;
+            font-size: 450%;
+        }
+    </style>
+
+    <nav class="navbar bg-body-tertiary fixed-top">
+        <div class="container-fluid">
+            <ul class="nav nav-tabs">
+                <li class="nav-item">
+                    <a class="navbar-brand fs-1">JAPK Repository</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link fs-2" aria-current="page" href="/Dashboard/Homepage">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active fs-2" aria-current="page" href="/Dashboard/LearnMore">About Us</a>
+                </li>
+            </ul>
+            <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
+                <div class="offcanvas-header">
+                    <h5 class="offcanvas-title" id="offcanvasNavbarLabel">Welcome</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                </div>
+                <div class="offcanvas-body">
+                    <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                JAPK Repository
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li class="nav-item">
+                                    <a class="nav-link active" aria-current="page" href="/Dashboard/Homepage">Home</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link active" aria-current="page" href="/Dashboard/LearnMore">About Us</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Password
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li class="nav-item">
+                                    <a class="nav-link active" aria-current="page" href="/Dashboard/Manage">Manage</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link active" aria-current="page" href="/Dashboard/Restore">Recover</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Settings
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li class="nav-item">
+                                    <a class="nav-link active" aria-current="page" href="/Dashboard/Profile">Profile</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link active" aria-current="page" href="/Dashboard/LoginDetails">Login Details</a>
+                                </li>
+                                <li>
+                                    <hr class="dropdown-divider">
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link active" aria-current="page" href="@Url.Action("LogOut", "Login")">Logout</a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div>
+        <h3 style="margin-top:100px; margin-left:80px">Welcome to JAPK Repository</h3>
+        <p style="margin-top:50px; margin-left:100px"><strong>Welcome to our password repository, a secure vault designed to keep your digital lives protected. In today's interconnected world,</strong></p>
+        <p style="margin-top:25px; margin-left:100px"><strong>where each online platform requires a unique and strong password, it's essential to have a reliable system to manage and store them. Our</strong></p>
+        <p style="margin-top:25px; margin-left:100px"><strong>repository is meticulously designed with utmost security in mind, ensuring that your passwords remain encrypted and accessible only to you.</strong></p>
+        <p style="margin-top:50px; margin-left:100px"><strong>Within this repository, you can securely store, organize, and retrieve your passwords for various online accounts, such as email, social</strong></p>
+        <p style="margin-top:25px; margin-left:100px"><strong>media, banking, and more. Each password entry is encrypted with industry-standard algorithms, safeguarding them from unauthorized</strong></p>
+        <p style="margin-top:25px; margin-left:100px"><strong>access and potential data breaches.</strong></p>
+        <p style="margin-top:50px; margin-left:100px"><strong>Remember, safeguarding your digital identities starts with a strong password management system. By utilizing this repository, you can</strong></p>
+        <p style="margin-top:25px; margin-left:100px"><strong>enjoy a peace of mind, knowing that your passwords are protected while maintaining easy accessibility when you need them. Let's embark</strong></p>
+        <p style="margin-top:25px; margin-left:100px"><strong>on a journey to enhance your online security by securely organizing your passwords today. </strong></p>
+    </div>
+
+</body>
+</html>

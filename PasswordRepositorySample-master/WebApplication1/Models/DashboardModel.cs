@@ -9,5 +9,7 @@ namespace WebApplication1.Models
     {
         public List<PasswordModel> PasswordList { get; set; }
         public PasswordModel PasswordModel { get; set; }
+        public List<RegistrationModel> RegistrationList { get; set; }
+        public RegistrationModel RegistrationModel { get; set; }
     }
 }

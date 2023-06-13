@@ -1,0 +1,246 @@
+﻿@model WebApplication1.Models.DashboardModel
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Dashboard</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/modernizr")
+</head>
+<body>
+    <style>
+        body {
+            background-image: url('../../images/profile.jpg');
+            overflow-y: hidden;
+            overflow-x: hidden
+        }
+
+        #roundedcorner {
+            border-radius: 25px;
+            background: #fff;
+            padding: 50px;
+        }
+
+        #incorner {
+            border-radius: 5px;
+            background: #fff;
+            padding: 5px;
+        }
+    </style>
+
+    <nav class="navbar bg-body-tertiary fixed-top">
+        <div class="container-fluid">
+            <ul class="nav nav-tabs">
+                <li class="nav-item">
+                    <a class="navbar-brand fs-1">SETTINGS</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active fs-2" aria-current="page" href="/Dashboard/Settings">Profile</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link fs-2" aria-current="page" href="/Dashboard/LoginDetails">Login Details</a>
+                </li>
+            </ul>
+            <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
+                <div class="offcanvas-header">
+                    <h5 class="offcanvas-title" id="offcanvasNavbarLabel">Welcome</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                </div>
+                <div class="offcanvas-body">
+                    <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                JAPK Repository
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li class="nav-item">
+                                    <a class="nav-link active" aria-current="page" href="/Dashboard/Homepage">Home</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link active" aria-current="page" href="/Dashboard/LearnMore">About Us</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Password
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li class="nav-item">
+                                    <a class="nav-link active" aria-current="page" href="/Dashboard/Manage">Manage</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link active" aria-current="page" href="/Dashboard/Restore">Recover</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Settings
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li class="nav-item">
+                                    <a class="nav-link active" aria-current="page" href="/Dashboard/Profile">Profile</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link active" aria-current="page" href="/Dashboard/LoginDetails">Login Details</a>
+                                </li>
+                                <li>
+                                    <hr class="dropdown-divider">
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link active" aria-current="page" href="@Url.Action("LogOut", "Login")">Logout</a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    @*general repository layout*@
+    <div class=" d-flex align-items-center justify-content-center vh-100" style="flex-direction:column">
+        <div class="bg-light border border-dark" id="roundedcorner">
+            <div style="text-align:center">
+                <h3>Account Details</h3>
+            </div>
+            <div>
+                @foreach (var reg in Model.RegistrationList)
+                {
+                    <div style="text-align:center; margin-bottom:5px">
+                        <h6>Name</h6>
+                    </div>
+                    <div class="border border-dark" style="margin-bottom:10px" id="incorner">
+                        @reg.NAME
+                    </div>
+                    <div style="text-align:center; margin-bottom:5px">
+                        <h6>Email</h6>
+                    </div>
+                    <div class="border border-dark" style="margin-bottom:10px" id="incorner">
+                        @reg.EMAIL
+                    </div>
+                    <div style="text-align:center; margin-bottom:5px">
+                        <h6>Birthday</h6>
+                    </div>
+                    <div class="border border-dark" style="margin-bottom:10px" id="incorner">
+                        @reg.BIRTHDAY
+                    </div>
+                    <div style="text-align:center; margin-bottom:5px">
+                        <h6>Contact Number</h6>
+                    </div>
+                    <div class="border border-dark" style="margin-bottom:10px" id="incorner">
+                        @reg.CONTACT
+                    </div>
+                    <div>
+                        <button class="btn btn-info btn-sm" onclick="modifyProfileDetails('@reg.ID', '@reg.NAME', '@reg.EMAIL', '@reg.BIRTHDAY', '@reg.CONTACT')">Edit Profile</button>
+                    </div>
+
+                }
+
+            </div>
+        </div>
+
+
+    </div>
+
+    @*Edit account Modal*@
+    <div id="edit-profile-modal" class="modal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Edit Account details</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+
+                    <label id="label-name">Name</label>
+                    <input type="text" class="form-control" id="txb-name" />
+
+                    <label id="label-email">Email</label>
+                    <input type="text" class="form-control" id="txb-email" />
+
+                    <label id="label-birthday">Birthday</label>
+                    <input type="text" class="form-control" id="txb-birthday" />
+
+                    <label id="label-contact">Contact</label>
+                    <input type="text" class="form-control" id="txb-contact" />
+
+                    <input type="hidden" id="pass-id" />
+
+                    <div style="text-align:center; margin-top:10px">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <input type="button" value="Edit account" class="btn btn-info" onclick="editProfileDetails()" />
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
+
+<script type="text/javascript">
+
+    function modifyProfileDetails(uId, nAme, eMail, cOntact, bIrthday) {
+
+        $('#edit-profile-modal').modal('show');
+
+        $('#txb-name').val(nAme);
+        $('#txb-email').val(eMail);
+        $('#txb-birthday').val(bIrthday);
+        $('#txb-contact').val(cOntact);
+        $('#pass-id').val(uId)
+
+    }
+
+
+    function editProfileDetails() {
+
+        var nAme = $('#txb-name').val();
+        var eMail = $('#txb-email').val();
+        var bIrthday = $('#txb-birthday').val();
+        var cOntact = $('#txb-contact').val();
+        var uId = $('#pass-id').val()
+
+
+        if (confirm('Are you sure you want to modify the account details?')) {
+
+            var reg = {
+                nAme: nAme,
+                eMail: eMail,
+                bIrthday: bIrthday,
+                cOntact: cOntact,
+                uId: uId,
+            }
+
+            $.ajax({
+                type: "POST",
+                url: "/Dashboard/EditProfile",
+                dataType: "JSON",
+                data: JSON.stringify(reg),
+                contentType: 'application/json; charset=utf8',
+                success: function (res) {
+                    alert(res.msg)
+                    location.reload(true);
+                },
+                error: function () {
+                    alert("An error occurred")
+                }
+            })
+
+        }
+
+    }
+</script>

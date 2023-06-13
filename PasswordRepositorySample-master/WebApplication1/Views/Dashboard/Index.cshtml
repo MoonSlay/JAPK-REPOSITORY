@@ -16,8 +16,38 @@
 
 </head>
 <body>
+    @*background image*@
+    @*<style>
+            body {
+                background-image: url('../../images/pass.jpg');
+            }
+        </style>*@
+
+    @*<div>
+            @{
+                for (var data in Model.RegistrationList)
+                {
+                    <tr>
+                        <th scope="row">@data.ID</th>
+                        <td>@data.NAME</td>
+                        <td>@data.EMAIL</td>
+                        <td>@data.CONTACT/td>
+                        <td>
+                            <div>
+                                <button class="btn btn-danger btn-sm" onclick="showProfile('@data.ID', '@data.NAME', '@data.EMAIL', '@data.CONTACT')">Edit Profile</button>
+                            </div>
+                        </td>
+                    </tr>
+                }
+            }
+        </div>*@
+
+    <li><a class="dropdown-item" href="@Url.Action("LogOut", "Login")">Logout</a></li>
+
+    @*general repository layout*@
     <div>
-        <h4 style="text-align:center">My Password List</h4>
+        <h4 style="text-align:center">Welcome back</h4>
+        <button class="btn btn-primary btn-block" style="margin-top:50px; width:25%" onclick="@("window.location.href='" + @Url.Action("Restore", "Dashboard") + "'");">Restore Password</button>
         <button class="btn btn-info btn-sm" type="button" data-bs-toggle="modal" data-bs-target="#add-password-modal">Add new password</button>
         <table class="table">
             <thead>
@@ -25,30 +55,40 @@
                     <th scope="col">#</th>
                     <th scope="col">Site name</th>
                     <th scope="col">Password</th>
+                    <th scope="col">Username</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Contact Number</th>
                     <th scope="col">Options</th>
                 </tr>
             </thead>
             <tbody>
-                @{
+                @{var ID = 0;
                     foreach (var data in Model.PasswordList)
                     {
                         <tr>
-                            <th scope="row">@data.ID</th>
+                            <th scope="row">@ID</th>
                             <td>@data.SITE_NAME</td>
                             <td>@data.SITE_PASSWORD</td>
+                            <td>@data.DEC_PASSWORD</td>
+                            <td>@data.USER_NAME</td>
+                            <td>@data.EMAIL</td>
+                            <td>@data.CONTACT_NUMBER</td>
                             <td>
                                 <div>
-                                    <button class="btn btn-danger btn-sm">Delete</button>
-                                    <button class="btn btn-info btn-sm">Modify</button>
+                                    <button class="btn btn-danger btn-sm" onclick="deleteAccount('@data.ID', '@data.SITE_NAME', '@data.USER_NAME')">Delete</button>
+                                    <button class="btn btn-info btn-sm" onclick="showAccountDetails('@data.ID', '@data.SITE_NAME','@data.SITE_PASSWORD', '@data.USER_NAME', '@data.EMAIL', '@data.CONTACT_NUMBER')">Modify</button>
+                                    <button class="btn btn-info btn-sm" onclick="showPassword('@data.ID', '@data.DEC_PASSWORD')">Show Password</button>
                                 </div>
                             </td>
                         </tr>
+                        ID++;
                     }
                 }
             </tbody>
         </table>
     </div>
 
+    @*add password modal*@
     <div id="add-password-modal" class="modal fade" tabindex="-1">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -63,41 +103,57 @@
         </div>
     </div>
 
-    <div id="modify-student-modal" class="modal fade" tabindex="-1">
+    @*modify password modal*@
+    <div id="modify-password-modal" class="modal fade" tabindex="-1">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">Modify student details</h5>
+                    <h5 class="modal-title">Modify Account details</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <label id="lbl-student-id-number">Student Id number</label>
-                    <input type="text" class="form-control" id="txb-student-id-number" />
+                    <label id="label-site-name">Site Name</label>
+                    <input type="text" class="form-control" id="txb-site-name" />
 
-                    <label id="lbl-student-name">Student Name</label>
-                    <input type="text" class="form-control" id="txb-student-name" />
+                    <label id="label-site-password">Site Password</label>
+                    <input type="text" class="form-control" id="txb-site-password" />
 
-                    <label id="lbl-student-address">Student Address</label>
-                    <input type="text" class="form-control" id="txb-student-address" />
+                    <label id="label-username">Username</label>
+                    <input type="text" class="form-control" id="txb-username" />
 
-                    <label id="lbl-student-year">Student Year</label>
-                    <input type="text" class="form-control" id="txb-student-year" />
+                    <label id="label-email">Email</label>
+                    <input type="text" class="form-control" id="txb-email" />
 
-                    <label id="lbl-student-contact-number">Student contact number</label>
-                    <input type="text" class="form-control" id="txb-student-contact-number" />
+                    <label id="label-contact">Contact Number</label>
+                    <input type="text" class="form-control" id="txb-contact" />
 
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="" id="cb-active">
-                        <label class="form-check-label" for="cb-active">
-                            Is active
-                        </label>
-                    </div>
-
-                    <input type="hidden" id="student-id" />
+                    <input type="hidden" id="pass-id" />
 
                     <div style="text-align:right">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <input type="button" value="Modify student" class="btn btn-info" onclick="modifyStudentDetails()" />
+                        <input type="button" value="Modify account" class="btn btn-info" onclick="modifyAccountDetails()" />
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @*show password modal*@
+    <div id="show-password-modal" class="modal fade" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Modify Account details</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <label id="label-show-password">Site Password</label>
+                    <input type="text" class="form-control" id="txb-show-password" value="@Model.PasswordModel.DEC_PASSWORD" />
+
+                    <input type="hidden" id="pass-id" />
+                    <div style="text-align:right">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                     </div>
 
                 </div>
@@ -108,17 +164,19 @@
 </body>
 </html>
 
-<script type="text/javascript">function deleteStudent(studentId, studentName, studentIdNumber) {
+<script type="text/javascript">
 
-        if (confirm("Do you want to delete: " + studentName + " with id number: " + studentIdNumber + "?")) {
+    function deleteAccount(userId, siteName, userName) {
+
+        if (confirm("Are you sure you want to delete your account in " + siteName + " with the username " + userName + "?")) {
 
             var data = {
-                studentId : studentId
+                userId: userId
             }
 
             $.ajax({
                 type: "POST",
-                url: "/Students/DeleteStudent",
+                url: "/Dashboard/DeleteAccount",
                 dataType: "JSON",
                 data: JSON.stringify(data),
                 contentType: 'application/json; charset=utf8',
@@ -135,48 +193,53 @@
 
     }
 
-    function showStudentDetails(studentId, studentNumber, studentName, studentContactNumber, studentYearLevel, status, studentAddress) {
+    function showPassword(userId, dec_Pass) {
 
-        $('#modify-student-modal').modal('show');
+        $('#show-password-modal').modal('show');
 
-        $('#txb-student-name').val(studentName);
-        $('#txb-student-address').val(studentAddress);
-        $('#txb-student-id-number').val(studentNumber);
-        $('#txb-student-year').val(studentYearLevel);
-        $('#txb-student-contact-number').val(studentContactNumber);
-        $('#student-id').val(studentId)
-
-        $('#cb-active').prop('checked', status)
-
+        $('#txb-show-password').val(dec_Pass);
+        $('#pass-id').val(userId)
 
     }
 
-    function modifyStudentDetails() {
+    function showAccountDetails(userId, siteName, sitePass, userName, email, contact) {
 
-        var studentName = $('#txb-student-name').val();
-        var studentAddress = $('#txb-student-address').val();
-        var studentIdNumber = $('#txb-student-id-number').val();
-        var studentYear = $('#txb-student-year').val();
-        var studentContactNumber = $('#txb-student-contact-number').val();
-        var studentId = $('#student-id').val()
-        var isActive = $('#cb-active').prop('checked');
+        $('#modify-password-modal').modal('show');
+
+        $('#txb-site-name').val(siteName);
+        $('#txb-site-password').val(sitePass);
+        $('#txb-username').val(userName);
+        $('#txb-email').val(email);
+        $('#txb-contact').val(contact);
+        $('#pass-id').val(userId)
+
+    }
 
 
-        if (confirm('Are you sure you want to modify the student details?')) {
+    function modifyAccountDetails() {
+
+        var siteName = $('#txb-site-name').val();
+        var sitePass = $('#txb-site-password').val();
+        var userName = $('#txb-username').val();
+        var email = $('#txb-email').val();
+        var contact = $('#txb-contact').val();
+        var userId = $('#pass-id').val()
+
+
+        if (confirm('Are you sure you want to modify the account details?')) {
 
             var data = {
-                studentId: studentId,
-                studentName: studentName,
-                studentAddress: studentAddress,
-                studentIdNumber: studentIdNumber,
-                studentYearLevel: studentYear,
-                studentContactNumber: studentContactNumber,
-                isActive: isActive
+                siteName: siteName,
+                sitePass: sitePass,
+                userName: userName,
+                email: email,
+                contact: contact,
+                userId: userId,
             }
 
             $.ajax({
                 type: "POST",
-                url: "/Students/UpdateStudent",
+                url: "/Dashboard/UpdateAccount",
                 dataType: "JSON",
                 data: JSON.stringify(data),
                 contentType: 'application/json; charset=utf8',
@@ -192,3 +255,54 @@
         }
 
     }
+    /*show account details*/
+    //function showAccountDetails(userId, name, email, birthday, contact) {
+
+    //    $('#modify-password-modal').modal('show');
+
+    //    $('#txb-name').val(name);
+    //    $('#txb-email').val(email);
+    //    $('#txb-birthday').val(birthday);
+    //    $('#txb-contact').val(contact);
+
+
+    //}
+
+    //function editProfileDetails() {
+
+    //    var name = $('#txb-name').val();
+    //    var email = $('#txb-email').val();
+    //    var birthday = $('#txb-birthday').val();
+    //    var contact = $('#txb-contact').val();
+
+
+    //    if (confirm('Are you sure you want to modify the account details?')) {
+
+    //        var data = {
+    //            name: name,
+    //            email: email,
+    //            birthday: birthday,
+    //            contact: contact,
+    //            userId: userId,
+    //        }
+
+    //        $.ajax({
+    //            type: "POST",
+    //            url: "/Dashboard/EditProfile",
+    //            dataType: "JSON",
+    //            data: JSON.stringify(data),
+    //            contentType: 'application/json; charset=utf8',
+    //            success: function (res) {
+    //                alert(res.msg)
+    //                location.reload(true);
+    //            },
+    //            error: function () {
+    //                alert("An error occurred")
+    //            }
+    //        })
+
+    //    }
+
+    //}
+
+</script>

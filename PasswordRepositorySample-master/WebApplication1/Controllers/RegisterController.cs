@@ -21,7 +21,7 @@ namespace WebApplication1.Controllers
 
             if(ModelState.IsValid)
             {
-                using (PassRepoDbEntities entities = new PassRepoDbEntities())
+                using (JAPKDBEntities entities = new JAPKDBEntities())
                 {
                     var userData = entities.TBL_LOGIN.Where(x=> x.USERNAME == _registration.USERNAME).FirstOrDefault();
 
@@ -47,9 +47,11 @@ namespace WebApplication1.Controllers
                         var nUserDetails = new TBL_USER_DETAILS
                         {
                             UID = nUser.ID,
-                            USER_EMAIL = _registration.EMAIL,
+                            EMAIL = _registration.EMAIL,
                             NAME = _registration.NAME,
-                            DATE_CREATED = DateTime.Now
+                            DATE_CREATED = DateTime.Now,
+                            CONTACT = _registration.CONTACT,
+                            BIRTHDAY = _registration.BIRTHDAY,
                         };
 
                         entities.TBL_USER_DETAILS.Add(nUserDetails);
@@ -59,6 +61,7 @@ namespace WebApplication1.Controllers
                             ViewBag.SuccessMessage = "User registered!";
                             return View();
                         }
+
 
                     }
                     else

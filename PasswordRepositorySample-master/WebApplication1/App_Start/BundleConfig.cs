@@ -20,7 +20,7 @@ namespace WebApplication1
                         "~/Scripts/modernizr-*"));
 
             bundles.Add(new Bundle("~/bundles/bootstrap").Include(
-                      "~/Scripts/bootstrap.min.js"
+                      "~/Scripts/bootstrap.bundle.min.js"
                       ));
 
             bundles.Add(new Bundle("~/Content/css").Include(

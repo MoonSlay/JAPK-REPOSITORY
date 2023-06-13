@@ -16,9 +16,11 @@ namespace WebApplication1
     {
         public int ID { get; set; }
         public string NAME { get; set; }
-        public string USER_EMAIL { get; set; }
+        public string EMAIL { get; set; }
         public Nullable<int> UID { get; set; }
         public System.DateTime DATE_CREATED { get; set; }
+        public Nullable<int> CONTACT { get; set; }
+        public string BIRTHDAY { get; set; }
     
         public virtual TBL_LOGIN TBL_LOGIN { get; set; }
     }
