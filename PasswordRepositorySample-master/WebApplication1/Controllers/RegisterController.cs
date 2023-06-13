@@ -47,7 +47,7 @@ namespace WebApplication1.Controllers
                         var nUserDetails = new TBL_USER_DETAILS
                         {
                             UID = nUser.ID,
-                            USER_EMAIL = _registration.EMAIL,
+                            EMAIL = _registration.EMAIL,
                             NAME = _registration.NAME,
                             DATE_CREATED = DateTime.Now,
                             CONTACT = _registration.CONTACT,

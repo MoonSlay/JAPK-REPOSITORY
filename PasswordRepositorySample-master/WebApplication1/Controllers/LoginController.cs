@@ -14,7 +14,7 @@ namespace WebApplication1.Controllers
         {
             if (Session["user_id"] != null)
             {
-                return RedirectToAction("Index", "Dashboard");
+                return RedirectToAction("Homepage", "Dashboard");
             }
 
             return View();
@@ -46,10 +46,9 @@ namespace WebApplication1.Controllers
                     };
 
                     Session["user_id"] = data.ID;
-                    Session.Timeout = 1440;
 
                     Response.Cookies.Add(httpCookie);
-                    return RedirectToAction("Index","Dashboard");
+                    return RedirectToAction("Homepage","Dashboard");
 
                 }
             }
@@ -62,10 +61,7 @@ namespace WebApplication1.Controllers
         {
             //clears all Session variables
             Session["ID"] = null;
-            Session["UserName"] = null;
-            Session["PIN"] = null;
-            Session["TO"] = null;
-            Session["timedout"] = null;
+
 
             //Clears whole session altogether
             Session.Abandon();

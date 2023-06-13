@@ -5,10 +5,10 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="d2da5745cd624c2a8d53960e07edc66a" Name="Diagram1">
-        <EntityTypeShape EntityType="JAPKDBModel.TBL_LOGIN" Width="1.5" PointX="0.75" PointY="2.75" />
+        <EntityTypeShape EntityType="JAPKDBModel.TBL_LOGIN" Width="1.5" PointX="0.75" PointY="3.625" />
         <EntityTypeShape EntityType="JAPKDBModel.TBL_USER_DETAILS" Width="1.5" PointX="3" PointY="5.5" />
+        <EntityTypeShape EntityType="JAPKDBModel.TBL_USER_PASSWORDS" Width="1.5" PointX="3" PointY="1.375" />
         <AssociationConnector Association="JAPKDBModel.FK_TBL_USER_DETAILS_TBL_LOGIN" />
-        <EntityTypeShape EntityType="JAPKDBModel.TBL_USER_PASSWORDS" Width="1.5" PointX="3" PointY="1.125" />
         <AssociationConnector Association="JAPKDBModel.FK_TBL_USER_PASSWORDS_TBL_USER_PASSWORDS" />
       </Diagram>
     </edmx:Diagrams>

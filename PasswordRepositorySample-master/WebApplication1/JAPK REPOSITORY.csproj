@@ -186,17 +186,17 @@
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
-    <Content Include="Images\login.jpg" />
-    <Content Include="Images\pass.jpg" />
-    <Content Include="Images\reg.jpg" />
-    <Content Include="Images\register.jpg" />
-    <Content Include="Images\try.gif" />
-    <Content Include="Images\try1.gif" />
+    <Content Include="Images\login.png" />
+    <Content Include="Images\More.jpg" />
+    <Content Include="Images\Password.jpg" />
+    <Content Include="Images\Profile.jpg" />
+    <Content Include="Images\Welcome to.jpg" />
     <Content Include="JAPKREPOSITORY.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>JAPKREPOSITORY.edmx</DependentUpon>
       <LastGenOutput>JAPKREPOSITORY.Context.cs</LastGenOutput>
     </Content>
+    <Content Include="JAPKREPOSITORY.edmx.sql" />
     <Content Include="JAPKREPOSITORY.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>JAPKREPOSITORY.edmx</DependentUpon>
@@ -267,9 +267,13 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Login\index.cshtml" />
     <Content Include="Views\Register\index.cshtml" />
-    <Content Include="Views\Dashboard\Index.cshtml" />
+    <Content Include="Views\Dashboard\Homepage.cshtml" />
+    <Content Include="Views\Dashboard\LearnMore.cshtml" />
     <Content Include="Views\Dashboard\_AddPassword.cshtml" />
+    <Content Include="Views\Dashboard\Manage.cshtml" />
     <Content Include="Views\Dashboard\Restore.cshtml" />
+    <Content Include="Views\Dashboard\Profile.cshtml" />
+    <Content Include="Views\Dashboard\LoginDetails.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -4,93 +4,93 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="JAPKDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
-        <EntityType Name="TBL_LOGIN">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="USERNAME" Type="varchar" MaxLength="12" />
-          <Property Name="PASSWORD" Type="varchar" MaxLength="255" />
-          <Property Name="DATE_CREATED" Type="datetime" />
-        </EntityType>
-        <EntityType Name="TBL_USER_DETAILS">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="NAME" Type="varchar" MaxLength="50" />
-          <Property Name="USER_EMAIL" Type="varchar" MaxLength="50" />
-          <Property Name="UID" Type="int" />
-          <Property Name="DATE_CREATED" Type="datetime" Nullable="false" />
-          <Property Name="CONTACT" Type="varchar" MaxLength="50" />
-          <Property Name="BIRTHDAY" Type="varchar" MaxLength="50" />
-        </EntityType>
-        <EntityType Name="TBL_USER_PASSWORDS">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="SITE_NAME" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="SITE_PASSWORD" Type="varchar(max)" Nullable="false" />
-          <Property Name="USER_ID" Type="int" Nullable="false" />
-          <Property Name="DATE_CREATED" Type="datetime" Nullable="false" />
-          <Property Name="DATE_MODIFIED" Type="datetime" Nullable="false" />
-          <Property Name="IS_DELETED" Type="bit" Nullable="false" />
-          <Property Name="USER_NAME" Type="varchar" MaxLength="50" />
-          <Property Name="EMAIL" Type="varchar" MaxLength="50" />
-          <Property Name="CONTACT_NUMBER" Type="int" />
-          <Property Name="DEC_PASSWORD" Type="varchar" MaxLength="50" />
-        </EntityType>
-        <Association Name="FK_TBL_USER_DETAILS_TBL_LOGIN">
-          <End Role="TBL_LOGIN" Type="Self.TBL_LOGIN" Multiplicity="0..1" />
-          <End Role="TBL_USER_DETAILS" Type="Self.TBL_USER_DETAILS" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="TBL_LOGIN">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="TBL_USER_DETAILS">
-              <PropertyRef Name="UID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_TBL_USER_PASSWORDS_TBL_USER_PASSWORDS">
-          <End Role="TBL_LOGIN" Type="Self.TBL_LOGIN" Multiplicity="1" />
-          <End Role="TBL_USER_PASSWORDS" Type="Self.TBL_USER_PASSWORDS" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="TBL_LOGIN">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="TBL_USER_PASSWORDS">
-              <PropertyRef Name="USER_ID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <EntityContainer Name="JAPKDBModelStoreContainer">
-          <EntitySet Name="TBL_LOGIN" EntityType="Self.TBL_LOGIN" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="TBL_USER_DETAILS" EntityType="Self.TBL_USER_DETAILS" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="TBL_USER_PASSWORDS" EntityType="Self.TBL_USER_PASSWORDS" Schema="dbo" store:Type="Tables" />
-          <AssociationSet Name="FK_TBL_USER_DETAILS_TBL_LOGIN" Association="Self.FK_TBL_USER_DETAILS_TBL_LOGIN">
-            <End Role="TBL_LOGIN" EntitySet="TBL_LOGIN" />
-            <End Role="TBL_USER_DETAILS" EntitySet="TBL_USER_DETAILS" />
-          </AssociationSet>
-          <AssociationSet Name="FK_TBL_USER_PASSWORDS_TBL_USER_PASSWORDS" Association="Self.FK_TBL_USER_PASSWORDS_TBL_USER_PASSWORDS">
-            <End Role="TBL_LOGIN" EntitySet="TBL_LOGIN" />
-            <End Role="TBL_USER_PASSWORDS" EntitySet="TBL_USER_PASSWORDS" />
-          </AssociationSet>
-        </EntityContainer>
-      </Schema></edmx:StorageModels>
+    <Schema Namespace="JAPKDBModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2012" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityContainer Name="JAPKDBModelStoreContainer">
+    <EntitySet Name="TBL_LOGIN" EntityType="JAPKDBModel.Store.TBL_LOGIN" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="TBL_USER_DETAILS" EntityType="JAPKDBModel.Store.TBL_USER_DETAILS" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="TBL_USER_PASSWORDS" EntityType="JAPKDBModel.Store.TBL_USER_PASSWORDS" store:Type="Tables" Schema="dbo" />
+    <AssociationSet Name="FK_TBL_USER_DETAILS_TBL_LOGIN" Association="JAPKDBModel.Store.FK_TBL_USER_DETAILS_TBL_LOGIN">
+      <End Role="TBL_LOGIN" EntitySet="TBL_LOGIN" />
+      <End Role="TBL_USER_DETAILS" EntitySet="TBL_USER_DETAILS" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TBL_USER_PASSWORDS_TBL_USER_PASSWORDS" Association="JAPKDBModel.Store.FK_TBL_USER_PASSWORDS_TBL_USER_PASSWORDS">
+      <End Role="TBL_LOGIN" EntitySet="TBL_LOGIN" />
+      <End Role="TBL_USER_PASSWORDS" EntitySet="TBL_USER_PASSWORDS" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="TBL_LOGIN">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="USERNAME" Type="varchar" Nullable="true" MaxLength="12" />
+    <Property Name="PASSWORD" Type="varchar" Nullable="true" MaxLength="255" />
+    <Property Name="DATE_CREATED" Type="datetime" Nullable="true" />
+  </EntityType>
+  <EntityType Name="TBL_USER_DETAILS">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="NAME" Type="varchar" Nullable="true" MaxLength="20" />
+    <Property Name="EMAIL" Type="varchar" Nullable="true" MaxLength="30" />
+    <Property Name="UID" Type="int" Nullable="true" />
+    <Property Name="DATE_CREATED" Type="datetime" Nullable="false" />
+    <Property Name="CONTACT" Type="int" Nullable="true" />
+    <Property Name="BIRTHDAY" Type="varchar" Nullable="true" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="TBL_USER_PASSWORDS">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="SITE_NAME" Type="varchar" Nullable="false" MaxLength="50" />
+    <Property Name="SITE_PASSWORD" Type="varchar" Nullable="false" MaxLength="50" />
+    <Property Name="USER_ID" Type="int" Nullable="false" />
+    <Property Name="DATE_CREATED" Type="datetime" Nullable="false" />
+    <Property Name="DATE_MODIFIED" Type="datetime" Nullable="false" />
+    <Property Name="IS_DELETED" Type="bit" Nullable="false" />
+    <Property Name="USER_NAME" Type="varchar" Nullable="true" MaxLength="50" />
+    <Property Name="EMAIL" Type="varchar" Nullable="true" MaxLength="50" />
+    <Property Name="CONTACT_NUMBER" Type="int" Nullable="true" />
+    <Property Name="DEC_PASSWORD" Type="varchar" Nullable="true" MaxLength="50" />
+  </EntityType>
+  <Association Name="FK_TBL_USER_DETAILS_TBL_LOGIN">
+    <End Role="TBL_LOGIN" Type="JAPKDBModel.Store.TBL_LOGIN" Multiplicity="0..1" />
+    <End Role="TBL_USER_DETAILS" Type="JAPKDBModel.Store.TBL_USER_DETAILS" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TBL_LOGIN">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="TBL_USER_DETAILS">
+        <PropertyRef Name="UID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TBL_USER_PASSWORDS_TBL_USER_PASSWORDS">
+    <End Role="TBL_LOGIN" Type="JAPKDBModel.Store.TBL_LOGIN" Multiplicity="1" />
+    <End Role="TBL_USER_PASSWORDS" Type="JAPKDBModel.Store.TBL_USER_PASSWORDS" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TBL_LOGIN">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="TBL_USER_PASSWORDS">
+        <PropertyRef Name="USER_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="JAPKDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityContainer Name="JAPKDBEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="TBL_LOGIN" EntityType="JAPKDBModel.TBL_LOGIN" />
           <EntitySet Name="TBL_USER_DETAILS" EntityType="JAPKDBModel.TBL_USER_DETAILS" />
+          <EntitySet Name="TBL_USER_PASSWORDS" EntityType="JAPKDBModel.TBL_USER_PASSWORDS" />
           <AssociationSet Name="FK_TBL_USER_DETAILS_TBL_LOGIN" Association="JAPKDBModel.FK_TBL_USER_DETAILS_TBL_LOGIN">
             <End Role="TBL_LOGIN" EntitySet="TBL_LOGIN" />
             <End Role="TBL_USER_DETAILS" EntitySet="TBL_USER_DETAILS" />
           </AssociationSet>
-          <EntitySet Name="TBL_USER_PASSWORDS" EntityType="JAPKDBModel.TBL_USER_PASSWORDS" />
           <AssociationSet Name="FK_TBL_USER_PASSWORDS_TBL_USER_PASSWORDS" Association="JAPKDBModel.FK_TBL_USER_PASSWORDS_TBL_USER_PASSWORDS">
             <End Role="TBL_LOGIN" EntitySet="TBL_LOGIN" />
             <End Role="TBL_USER_PASSWORDS" EntitySet="TBL_USER_PASSWORDS" />
@@ -112,13 +112,30 @@
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="NAME" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="USER_EMAIL" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="NAME" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="EMAIL" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
           <Property Name="UID" Type="Int32" />
           <Property Name="DATE_CREATED" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="CONTACT" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CONTACT" Type="Int32" />
           <Property Name="BIRTHDAY" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="TBL_LOGIN" Relationship="JAPKDBModel.FK_TBL_USER_DETAILS_TBL_LOGIN" FromRole="TBL_USER_DETAILS" ToRole="TBL_LOGIN" />
+        </EntityType>
+        <EntityType Name="TBL_USER_PASSWORDS">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SITE_NAME" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="SITE_PASSWORD" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="USER_ID" Type="Int32" Nullable="false" />
+          <Property Name="DATE_CREATED" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="DATE_MODIFIED" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="IS_DELETED" Type="Boolean" Nullable="false" />
+          <Property Name="USER_NAME" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="EMAIL" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CONTACT_NUMBER" Type="Int32" />
+          <Property Name="DEC_PASSWORD" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="TBL_LOGIN" Relationship="JAPKDBModel.FK_TBL_USER_PASSWORDS_TBL_USER_PASSWORDS" FromRole="TBL_USER_PASSWORDS" ToRole="TBL_LOGIN" />
         </EntityType>
         <Association Name="FK_TBL_USER_DETAILS_TBL_LOGIN">
           <End Type="JAPKDBModel.TBL_LOGIN" Role="TBL_LOGIN" Multiplicity="0..1" />
@@ -132,23 +149,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityType Name="TBL_USER_PASSWORDS">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="SITE_NAME" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="SITE_PASSWORD" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="USER_ID" Type="Int32" Nullable="false" />
-          <Property Name="DATE_CREATED" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="DATE_MODIFIED" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="IS_DELETED" Type="Boolean" Nullable="false" />
-          <Property Name="USER_NAME" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="EMAIL" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="CONTACT_NUMBER" Type="Int32" />
-          <Property Name="DEC_PASSWORD" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="TBL_LOGIN" Relationship="JAPKDBModel.FK_TBL_USER_PASSWORDS_TBL_USER_PASSWORDS" FromRole="TBL_USER_PASSWORDS" ToRole="TBL_LOGIN" />
-        </EntityType>
         <Association Name="FK_TBL_USER_PASSWORDS_TBL_USER_PASSWORDS">
           <End Type="JAPKDBModel.TBL_LOGIN" Role="TBL_LOGIN" Multiplicity="1" />
           <End Type="JAPKDBModel.TBL_USER_PASSWORDS" Role="TBL_USER_PASSWORDS" Multiplicity="*" />
@@ -165,51 +165,50 @@
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
-      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="JAPKDBModelStoreContainer" CdmEntityContainer="JAPKDBEntities">
-          <EntitySetMapping Name="TBL_LOGIN">
-            <EntityTypeMapping TypeName="JAPKDBModel.TBL_LOGIN">
-              <MappingFragment StoreEntitySet="TBL_LOGIN">
-                <ScalarProperty Name="DATE_CREATED" ColumnName="DATE_CREATED" />
-                <ScalarProperty Name="PASSWORD" ColumnName="PASSWORD" />
-                <ScalarProperty Name="USERNAME" ColumnName="USERNAME" />
-                <ScalarProperty Name="ID" ColumnName="ID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="TBL_USER_DETAILS">
-            <EntityTypeMapping TypeName="JAPKDBModel.TBL_USER_DETAILS">
-              <MappingFragment StoreEntitySet="TBL_USER_DETAILS">
-                <ScalarProperty Name="BIRTHDAY" ColumnName="BIRTHDAY" />
-                <ScalarProperty Name="CONTACT" ColumnName="CONTACT" />
-                <ScalarProperty Name="DATE_CREATED" ColumnName="DATE_CREATED" />
-                <ScalarProperty Name="UID" ColumnName="UID" />
-                <ScalarProperty Name="USER_EMAIL" ColumnName="USER_EMAIL" />
-                <ScalarProperty Name="NAME" ColumnName="NAME" />
-                <ScalarProperty Name="ID" ColumnName="ID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="TBL_USER_PASSWORDS">
-            <EntityTypeMapping TypeName="JAPKDBModel.TBL_USER_PASSWORDS">
-              <MappingFragment StoreEntitySet="TBL_USER_PASSWORDS">
-                <ScalarProperty Name="DEC_PASSWORD" ColumnName="DEC_PASSWORD" />
-                <ScalarProperty Name="CONTACT_NUMBER" ColumnName="CONTACT_NUMBER" />
-                <ScalarProperty Name="EMAIL" ColumnName="EMAIL" />
-                <ScalarProperty Name="USER_NAME" ColumnName="USER_NAME" />
-                <ScalarProperty Name="IS_DELETED" ColumnName="IS_DELETED" />
-                <ScalarProperty Name="DATE_MODIFIED" ColumnName="DATE_MODIFIED" />
-                <ScalarProperty Name="DATE_CREATED" ColumnName="DATE_CREATED" />
-                <ScalarProperty Name="USER_ID" ColumnName="USER_ID" />
-                <ScalarProperty Name="SITE_PASSWORD" ColumnName="SITE_PASSWORD" />
-                <ScalarProperty Name="SITE_NAME" ColumnName="SITE_NAME" />
-                <ScalarProperty Name="ID" ColumnName="ID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-        </EntityContainerMapping>
-      </Mapping>
-    </edmx:Mappings>
+    <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="JAPKDBModelStoreContainer" CdmEntityContainer="JAPKDBEntities">
+    <EntitySetMapping Name="TBL_LOGIN">
+      <EntityTypeMapping TypeName="IsTypeOf(JAPKDBModel.TBL_LOGIN)">
+        <MappingFragment StoreEntitySet="TBL_LOGIN">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="USERNAME" ColumnName="USERNAME" />
+          <ScalarProperty Name="PASSWORD" ColumnName="PASSWORD" />
+          <ScalarProperty Name="DATE_CREATED" ColumnName="DATE_CREATED" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TBL_USER_DETAILS">
+      <EntityTypeMapping TypeName="IsTypeOf(JAPKDBModel.TBL_USER_DETAILS)">
+        <MappingFragment StoreEntitySet="TBL_USER_DETAILS">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="NAME" ColumnName="NAME" />
+          <ScalarProperty Name="EMAIL" ColumnName="EMAIL" />
+          <ScalarProperty Name="UID" ColumnName="UID" />
+          <ScalarProperty Name="DATE_CREATED" ColumnName="DATE_CREATED" />
+          <ScalarProperty Name="CONTACT" ColumnName="CONTACT" />
+          <ScalarProperty Name="BIRTHDAY" ColumnName="BIRTHDAY" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TBL_USER_PASSWORDS">
+      <EntityTypeMapping TypeName="IsTypeOf(JAPKDBModel.TBL_USER_PASSWORDS)">
+        <MappingFragment StoreEntitySet="TBL_USER_PASSWORDS">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="SITE_NAME" ColumnName="SITE_NAME" />
+          <ScalarProperty Name="SITE_PASSWORD" ColumnName="SITE_PASSWORD" />
+          <ScalarProperty Name="USER_ID" ColumnName="USER_ID" />
+          <ScalarProperty Name="DATE_CREATED" ColumnName="DATE_CREATED" />
+          <ScalarProperty Name="DATE_MODIFIED" ColumnName="DATE_MODIFIED" />
+          <ScalarProperty Name="IS_DELETED" ColumnName="IS_DELETED" />
+          <ScalarProperty Name="USER_NAME" ColumnName="USER_NAME" />
+          <ScalarProperty Name="EMAIL" ColumnName="EMAIL" />
+          <ScalarProperty Name="CONTACT_NUMBER" ColumnName="CONTACT_NUMBER" />
+          <ScalarProperty Name="DEC_PASSWORD" ColumnName="DEC_PASSWORD" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping></edmx:Mappings>
   </edmx:Runtime>
   <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
   <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
@@ -223,7 +222,7 @@
         <DesignerProperty Name="ValidateOnBuild" Value="true" />
         <DesignerProperty Name="EnablePluralization" Value="true" />
         <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
-        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="UseLegacyProvider" Value="False" />
         <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
       </DesignerInfoPropertySet>
     </Options>
